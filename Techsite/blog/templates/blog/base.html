@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <ul class="nav nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link", href="">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link", href="">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link", href="">About</a>
+                </li>
+            </ul>
+        </div>   
+    </nav>    
+    <div class="container">
+        {% block body_block %}
+
+        {% endblock %}
+    </div>
+        
+</body>
+</html>
