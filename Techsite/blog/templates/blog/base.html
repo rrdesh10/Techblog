@@ -1,32 +1,79 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title></title>
+
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <!-- medium-editor -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css"
+     media="screen" charset="utf-8">
+
+    <!-- Custom css -->
+    <link rel="stylesheet"  href="{% static 'css/blog.css' %}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,200&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <ul class="nav nav-justified">
+            <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link", href="">Home</a>
+                    <a class="nav-brand bigbrand", href="{% url 'post_list' %}"> TechBlog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link", href="">Admin</a>
+                    <a class="nav-link", href="{% url 'admin:index' %}">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link", href="">About</a>
+                    <a class="nav-link", href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link", href="https://www.github.com">Github</a>
                 </li>
             </ul>
-        </div>   
-    </nav>    
-    <div class="container">
-        {% block body_block %}
 
-        {% endblock %}
+            <ul class="nav nav-pills align-content-sm-end">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'post_new' %}">New Post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'post_draft' %}">Drafts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}"> Logout</a>
+                </li>
+                <li>
+                    <a >Welcome {{ user.username }}</a>
+                </li>
+                {% else %} 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}"><i class="material-icons" style="font-size:36px; color:rgb(17, 16, 16)">person</i></a>
+                    </li>
+                {% endif%}
+            </ul>
+        </div>   
+    </nav>   
+    
+    
+    <div class="content container-fluid">
+        <div class="col-md-8">
+            <div class="blog_posts">
+                {% block body_block %}
+
+                {% endblock %}
+            </div>
+        </div> 
     </div>
         
 </body>

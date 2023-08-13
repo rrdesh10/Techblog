@@ -11,14 +11,14 @@ class Post(models.Model):
     publish_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
-        self.publish_date = timezone.now
+        self.publish_date = timezone.now()
         self.save()
 
     def approve_comments(self):
-        return self.comments.filter(approved_comments=True) # type: ignore
+        return self.comments.filter(approved_comments=True)   # type: ignore
 
     def get_absolute_url(self):
-        return reverse('post.detail', kwargs={'pk': self.pk})
+        return reverse('post_detail', kwargs={'pk': self.pk})
 
     def __str__(self) -> str:
         return self.title
@@ -39,4 +39,4 @@ class Comment(models.Model):
         return self.text
     
     def get_absolute_url(self):
-        return reverse('post.list')
+        return reverse('post_list')

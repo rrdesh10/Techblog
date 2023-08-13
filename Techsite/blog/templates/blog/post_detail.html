@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% extends 'blog/base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Detail</title>
+</head>
+<body>
+    {% block body_block %}
+
+    <h2 class="posttitle loader">{{ post.title}}</h2>
+    {% if published_date %}
+        <div class="date postdate">
+            {{ post.published_date }}
+        </div>
+    {% else %}
+        <a class="btn btn-default btn-outline-dark" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+    {% endif %}
+
+    <p class="postcontent">{{ post.title|safe|linebreaksbr  }}</p>
+
+    {% if user.is_authenticated %}
+        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><i class="material-icons" 
+            style="color:rgb(14, 13, 13)">create</i></a>
+        <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><i class="material-icons" 
+            style="color:rgb(172, 13, 13)">clear</i></a>
+    {% endif %}
+
+    <hr>
+    <a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+
+    <!-- Comment section -->
+    <div class="container-fluid">
+        {% for comment in post.comments.all %}
+        <br>
+        {% if user.is_authenticated or comment.approved_comment %}
+            {{ comment.create_date }}
+
+                {% if not comment.approved_comment %}
+                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><i class="material-icons" 
+                    style="color:rgb(19, 18, 18)">done</i></a>
+                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><i class="material-icons" 
+                    style="color:rgb(172, 13, 13)">clear</i></a>
+                {% endif %}
+
+                <p>{{ comment.text|safe|linebreaksbr  }}</p>
+                <p>Posted by: <strong>{{ comment.author}}</strong></p>
+        {% endif %}
+        {% empty %}
+            <p>No comments!</p>
+        {% endfor %}
+    </div>
+
+    {% endblock %}
+    
+</body>
+</html>
